@@ -1,6 +1,9 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import * as React from "react";
+import Balance from "../components/Balance";
+import HistoryGraph from "../components/HistoryGraph";
 import Header from "../components/sections/Header";
+import Send from "../components/Send";
 import { UserData } from "../types";
 
 interface Props {
@@ -10,22 +13,23 @@ interface Props {
 const Dashboard: React.FC<Props> = ({ user, handleSignout }) => {
     return (
         <Flex direction="column">
-            <Flex borderBottom="1px" p="5px" justify="stretch" pl="5" pr="5">
+            <Flex
+                borderBottom="1px"
+                borderColor="gray.500"
+                p="10px"
+                justify="stretch"
+                pl="5"
+                pr="5"
+            >
                 <Header user={user} handleSignout={handleSignout} />
             </Flex>
             <Flex direction="row" maxHeight="100%" align="stretch">
                 <Flex direction="column" flex="1" p="5">
-                    <Box bg="red.200" height="150px" mb="5">
-                        <Text fontSize="24px"> Balance Widget</Text>
-                    </Box>
-                    <Box bg="red.200" height="150px">
-                        <Text fontSize="24px"> Send Jobcoin Widget</Text>
-                    </Box>
+                    <Balance balance={user?.balance ?? ""} />
+                    <Send />
                 </Flex>
                 <Flex flex="3" p="5">
-                    <Box bg="red.200" width="100%">
-                        <Text fontSize="40px">Graph</Text>
-                    </Box>
+                    <HistoryGraph />
                 </Flex>
             </Flex>
         </Flex>

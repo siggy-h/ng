@@ -9,6 +9,11 @@ function App() {
     const [user, setUser] = React.useState(null);
     const [invalidSignin, setInvalidSigin] = React.useState(false);
 
+    // TODO: remove this...
+    React.useEffect(() => {
+        client.getUserAddress("Alice").then((resp) => setUser(resp));
+    }, [setUser]);
+
     function handleUserSubmit(userAddress: string): void {
         if (!userAddress) setInvalidSigin(true);
 
