@@ -1,12 +1,17 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import * as React from "react";
 import Header from "../components/sections/Header";
+import { UserData } from "../types";
 
-const Dashboard: React.FC = () => {
+interface Props {
+    user: UserData | null;
+    handleSignout: VoidFunction;
+}
+const Dashboard: React.FC<Props> = ({ user, handleSignout }) => {
     return (
         <Flex direction="column">
             <Flex borderBottom="1px" p="5px" justify="stretch" pl="5" pr="5">
-                <Header />
+                <Header user={user} handleSignout={handleSignout} />
             </Flex>
             <Flex direction="row" maxHeight="100%" align="stretch">
                 <Flex direction="column" flex="1" p="5">
