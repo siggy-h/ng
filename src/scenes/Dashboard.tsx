@@ -1,16 +1,14 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import * as React from "react";
 import Balance from "../components/Balance";
 import HistoryGraph from "../components/HistoryGraph";
 import Header from "../components/sections/Header";
 import Send from "../components/Send";
-import { UserData } from "../types";
 
 interface Props {
-    user: UserData | null;
     handleSignout: VoidFunction;
 }
-const Dashboard: React.FC<Props> = ({ user, handleSignout }) => {
+const Dashboard: React.FC<Props> = ({ handleSignout }) => {
     return (
         <Flex direction="column">
             <Flex
@@ -21,11 +19,11 @@ const Dashboard: React.FC<Props> = ({ user, handleSignout }) => {
                 pl="5"
                 pr="5"
             >
-                <Header user={user} handleSignout={handleSignout} />
+                <Header handleSignout={handleSignout} />
             </Flex>
             <Flex direction="row" maxHeight="100%" align="stretch">
                 <Flex direction="column" flex="1" p="5">
-                    <Balance balance={user?.balance ?? ""} />
+                    <Balance />
                     <Send />
                 </Flex>
                 <Flex flex="3" p="5">

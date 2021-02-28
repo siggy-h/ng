@@ -1,18 +1,20 @@
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { Flex, Text, Button, Avatar } from "@chakra-ui/react";
 import * as React from "react";
-import { UserData } from "../../types";
+import { UserContext } from "../../context/UserContext";
 
 interface HeaderProps {
-    user: UserData | null;
     handleSignout: VoidFunction;
 }
 
-const Header: React.FC<HeaderProps> = ({ user, handleSignout }) => {
+const Header: React.FC<HeaderProps> = ({ handleSignout }) => {
+    const { userAddress } = React.useContext(UserContext);
+
     return (
         <>
             <Flex flex="1" align="center">
                 <CheckCircleIcon w={8} h={8} color="teal" mr="2" />
+                {userAddress}
             </Flex>
             <Flex flex="1" align="center" justify="flex-end">
                 <Avatar size="xs" name="Tom Selek" mr="2" />

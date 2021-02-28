@@ -1,33 +1,23 @@
 import * as React from "react";
 import { Flex, Text } from "@chakra-ui/react";
+import SubTitle from "./SubTitle";
+import { UserContext } from "../context/UserContext";
 
-interface Props {
-    balance: string | null;
-}
+const Balance: React.FC = () => {
+    const { user } = React.useContext(UserContext);
 
-const Balance: React.FC<Props> = ({ balance }) => {
     return (
         <Flex
             direction="column"
             bg="gray.100"
-            height="200px"
+            height="150px"
             mb="5"
             align="center"
             justify="center"
         >
-            <Flex
-                flex="1"
-                borderBottom="1px"
-                borderColor="gray.500"
-                p="5px"
-                align="center"
-                alignSelf="stretch"
-                justify="center"
-            >
-                <Text fontSize="18px"> Jobcoin Balance</Text>
-            </Flex>
+            <SubTitle title="Jobcoin Balance" />
             <Flex flex="3" align="center" alignSelf="stretch" justify="center">
-                <Text fontSize="24px"> {balance ?? balance}</Text>
+                <Text fontSize="24px">{user.balance ?? user.balance}</Text>
             </Flex>
         </Flex>
     );
