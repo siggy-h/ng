@@ -12,18 +12,28 @@ function App() {
     const [invalidSignin, setInvalidSigin] = React.useState(false);
     const [user, setUser] = React.useState<UserData | null>(null);
 
+    /**
+     * TODO: Siggy :)
+     *  __ handle 422 response for sendJobcoin
+     *  __ make the graph
+     *  __ write some tests
+     */
+
     // TODO: remove this...
     React.useEffect(() => {
-        client.getUserAddress("Alice").then((resp) => setUser(resp));
+        client.getUserAddress("Alice").then((resp) => {
+            setUser(resp);
+            setUserAddress("Alice");
+        });
     }, [setUser]);
 
-    function handleUserSubmit(userAddress: string): void {
-        if (!userAddress) setInvalidSigin(true);
+    function handleUserSubmit(address: string): void {
+        if (!address) setInvalidSigin(true);
 
-        setUserAddress(userAddress);
+        setUserAddress(address);
         setInvalidSigin(false);
 
-        client.getUserAddress(userAddress).then((resp) => {
+        client.getUserAddress(address).then((resp) => {
             // resp = {balance: "0", transactions: Array(0)}
             if (isInvalidUser(resp)) {
                 setInvalidSigin(true);
@@ -33,8 +43,21 @@ function App() {
         });
     }
 
+    function updateUserData(): void {
+        client.getUserAddress(userAddress).then((resp) => {
+            setUser(resp);
+        });
+    }
+
     function handleSignout(): void {
         setUser(null);
+    }
+
+    function handleSendTransaction(destination: string, amount: number): void {
+        client.sendJobcoin(userAddress, destination, amount).then((resp) => {
+            debugger;
+            updateUserData();
+        });
     }
 
     return (
@@ -47,7 +70,10 @@ function App() {
             )}
             {user && !invalidSignin && (
                 <UserContext.Provider value={{ userAddress, user }}>
-                    <Dashboard handleSignout={handleSignout} />
+                    <Dashboard
+                        signout={handleSignout}
+                        sendTransaction={handleSendTransaction}
+                    />
                 </UserContext.Provider>
             )}
         </div>

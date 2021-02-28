@@ -2,12 +2,35 @@ import * as React from "react";
 import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import SubTitle from "./SubTitle";
 
-const Send: React.FC = () => {
+interface Props {
+    sendTransaction: (destination: string, amount: number) => void;
+}
+
+const Send: React.FC<Props> = ({ sendTransaction }) => {
+    const [destination, setDestination] = React.useState<string | null>(null);
+    const [sendAmount, setSendAmount] = React.useState<string>("0");
+
+    function canContinue(): boolean {
+        return !!destination && amountIsValid() && parseInt(sendAmount) !== 0;
+    }
+
+    function amountIsValid(): boolean {
+        const amt = parseInt(sendAmount);
+
+        return !isNaN(amt);
+    }
+
+    function handleSubmit() {
+        if (destination === null || !amountIsValid()) return;
+        sendTransaction(destination, parseInt(sendAmount));
+        setDestination(null);
+        setSendAmount("0");
+    }
+
     return (
         <Flex
             direction="column"
             bg="gray.100"
-            // height="250px"
             p="15"
             align="center"
             justify="center"
@@ -30,6 +53,8 @@ const Send: React.FC = () => {
                         borderColor="teal.400"
                         focusBorderColor="teal.300"
                         placeholder="Enter address"
+                        value={destination ?? ""}
+                        onChange={(ev) => setDestination(ev.target.value)}
                     />
                 </FormControl>
                 <FormControl id="amount" isRequired mb="15px">
@@ -37,11 +62,13 @@ const Send: React.FC = () => {
                         Amount to Send
                     </FormLabel>
                     <Input
-                        type="number"
                         size="sm"
+                        isInvalid={!amountIsValid()}
                         borderColor="teal.400"
                         focusBorderColor="teal.300"
                         placeholder="Enter number"
+                        value={sendAmount ?? ""}
+                        onChange={(ev) => setSendAmount(ev.target.value)}
                     />
                 </FormControl>
                 <Button
@@ -49,7 +76,8 @@ const Send: React.FC = () => {
                     colorScheme="teal"
                     variant="solid"
                     m="10px"
-                    // onClick={handleSubmit}
+                    disabled={!canContinue()}
+                    onClick={handleSubmit}
                 >
                     Send Jobcoin
                 </Button>

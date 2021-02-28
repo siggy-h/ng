@@ -6,9 +6,10 @@ import Header from "../components/sections/Header";
 import Send from "../components/Send";
 
 interface Props {
-    handleSignout: VoidFunction;
+    signout: VoidFunction;
+    sendTransaction: (destination: string, amount: number) => void;
 }
-const Dashboard: React.FC<Props> = ({ handleSignout }) => {
+const Dashboard: React.FC<Props> = ({ signout, sendTransaction }) => {
     return (
         <Flex direction="column">
             <Flex
@@ -19,12 +20,12 @@ const Dashboard: React.FC<Props> = ({ handleSignout }) => {
                 pl="5"
                 pr="5"
             >
-                <Header handleSignout={handleSignout} />
+                <Header handleSignout={signout} />
             </Flex>
             <Flex direction="row" maxHeight="100%" align="stretch">
                 <Flex direction="column" flex="1" p="5">
                     <Balance />
-                    <Send />
+                    <Send sendTransaction={sendTransaction} />
                 </Flex>
                 <Flex flex="3" p="5">
                     <HistoryGraph />
