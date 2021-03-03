@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Box, Text } from "@chakra-ui/react";
-import SubTitle from "./SubTitle";
+import { Box } from "@chakra-ui/react";
+import SubTitle from "../SubTitle";
+import Graph from "../Graph";
 
 const HistoryGraph: React.FC = () => {
     return (
-        <Box bg="red.200" width="100%">
+        <Box background="gray.100">
             <SubTitle title="Transaction History" />
-            <Text fontSize="40px">Graph</Text>
+            <Graph />
         </Box>
     );
 };

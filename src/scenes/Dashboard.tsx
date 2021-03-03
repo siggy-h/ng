@@ -1,13 +1,13 @@
-import { Flex } from "@chakra-ui/react";
 import * as React from "react";
+import { Flex } from "@chakra-ui/react";
 import Balance from "../components/Balance";
-import HistoryGraph from "../components/HistoryGraph";
+import HistoryGraph from "../components/sections/HistoryGraph";
 import Header from "../components/sections/Header";
 import Send from "../components/Send";
 
 interface Props {
     signout: VoidFunction;
-    sendTransaction: (destination: string, amount: number) => void;
+    sendTransaction: () => void;
 }
 const Dashboard: React.FC<Props> = ({ signout, sendTransaction }) => {
     return (
@@ -22,12 +22,13 @@ const Dashboard: React.FC<Props> = ({ signout, sendTransaction }) => {
             >
                 <Header handleSignout={signout} />
             </Flex>
-            <Flex direction="row" maxHeight="100%" align="stretch">
-                <Flex direction="column" flex="1" p="5">
+
+            <Flex direction="row" p="20px">
+                <Flex direction="column" flex="1">
                     <Balance />
                     <Send sendTransaction={sendTransaction} />
                 </Flex>
-                <Flex flex="3" p="5">
+                <Flex direction="column" flex="3" ml="20px" mr="10px">
                     <HistoryGraph />
                 </Flex>
             </Flex>

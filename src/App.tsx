@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import * as client from "./client";
 import { UserContext } from "./context/UserContext";
 import Dashboard from "./scenes/Dashboard";
@@ -14,54 +13,53 @@ function App() {
 
     /**
      * TODO: Siggy :)
-     *  __ handle 422 response for sendJobcoin
-     *  __ make the graph
+     *  __ make the graph responsive
+     *  __ ensure the graph works with a lot of transactions.
      *  __ write some tests
      */
 
-    // TODO: remove this...
     React.useEffect(() => {
-        client.getUserAddress("Alice").then((resp) => {
-            setUser(resp);
-            setUserAddress("Alice");
-        });
-    }, [setUser]);
+        const storedUserAddress = localStorage.getItem("userAddress");
+
+        if (storedUserAddress) {
+            setUserAddress(storedUserAddress);
+            client.getUserAddress(storedUserAddress).then((resp) => {
+                setUser(resp);
+            });
+        }
+        return () => localStorage.clear();
+    }, [setUserAddress, setUser]);
 
     function handleUserSubmit(address: string): void {
         if (!address) setInvalidSigin(true);
-
-        setUserAddress(address);
-        setInvalidSigin(false);
 
         client.getUserAddress(address).then((resp) => {
             // resp = {balance: "0", transactions: Array(0)}
             if (isInvalidUser(resp)) {
                 setInvalidSigin(true);
             } else {
+                localStorage.setItem("userAddress", address);
+                setUserAddress(address);
+                setInvalidSigin(false);
                 setUser(resp);
             }
         });
     }
 
-    function updateUserData(): void {
+    function handleSendTransaction(): void {
+        // update user
         client.getUserAddress(userAddress).then((resp) => {
             setUser(resp);
         });
     }
 
     function handleSignout(): void {
+        localStorage.clear();
         setUser(null);
     }
 
-    function handleSendTransaction(destination: string, amount: number): void {
-        client.sendJobcoin(userAddress, destination, amount).then((resp) => {
-            debugger;
-            updateUserData();
-        });
-    }
-
     return (
-        <div className="App">
+        <div>
             {!user && (
                 <Signin
                     onSubmit={handleUserSubmit}

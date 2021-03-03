@@ -1,4 +1,4 @@
-export interface Transactions {
+export interface Transaction {
     amount: string; // "50"
     timestamp: string; // "2021-02-18T17:53:15.470Z"
     toAddress: string; // "Alice"
@@ -7,5 +7,5 @@ export interface Transactions {
 
 export interface UserData {
     balance: string;
-    transactions: ReadonlyArray<Transactions>;
+    transactions: Array<Transaction>;
 }

@@ -1,30 +1,52 @@
-import * as React from "react";
 import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import * as React from "react";
+import * as client from "../client";
+import { UserContext } from "../context/UserContext";
 import SubTitle from "./SubTitle";
 
 interface Props {
-    sendTransaction: (destination: string, amount: number) => void;
+    sendTransaction: VoidFunction;
 }
 
 const Send: React.FC<Props> = ({ sendTransaction }) => {
     const [destination, setDestination] = React.useState<string | null>(null);
     const [sendAmount, setSendAmount] = React.useState<string>("0");
+    const [sendMessage, setSendMessage] = React.useState(null);
+
+    const { userAddress } = React.useContext(UserContext);
 
     function canContinue(): boolean {
         return !!destination && amountIsValid() && parseInt(sendAmount) !== 0;
     }
 
     function amountIsValid(): boolean {
-        const amt = parseInt(sendAmount);
-
-        return !isNaN(amt);
+        return !isNaN(parseInt(sendAmount));
     }
 
-    function handleSubmit() {
-        if (destination === null || !amountIsValid()) return;
-        sendTransaction(destination, parseInt(sendAmount));
-        setDestination(null);
+    function clearAmount(): void {
         setSendAmount("0");
+    }
+
+    function clearState(): void {
+        setDestination(null);
+        clearAmount();
+        setSendMessage(null);
+    }
+
+    function handleSendJobCoin(): void {
+        if (destination === null || !amountIsValid()) return;
+
+        client
+            .sendJobcoin(userAddress, destination, parseInt(sendAmount))
+            .then((resp) => {
+                if (resp.error) {
+                    setSendMessage(resp.error);
+                    clearAmount();
+                } else {
+                    sendTransaction();
+                    clearState();
+                }
+            });
     }
 
     return (
@@ -71,13 +93,14 @@ const Send: React.FC<Props> = ({ sendTransaction }) => {
                         onChange={(ev) => setSendAmount(ev.target.value)}
                     />
                 </FormControl>
+                {sendMessage && <p>Insufficent Funds</p>}
                 <Button
                     loadingText="Submitting"
                     colorScheme="teal"
                     variant="solid"
                     m="10px"
                     disabled={!canContinue()}
-                    onClick={handleSubmit}
+                    onClick={() => handleSendJobCoin()}
                 >
                     Send Jobcoin
                 </Button>
