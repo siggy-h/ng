@@ -5,12 +5,11 @@ import Signin from "./scenes/Signin";
 import { UserData } from "./types";
 import * as client from "./client";
 import { isInvalidUser } from "./utils";
-import { stubData } from "./StubData";
 
 function App() {
-    const [userAddress, setUserAddress] = React.useState("Alice");
+    const [userAddress, setUserAddress] = React.useState("");
     const [invalidSignin, setInvalidSigin] = React.useState(false);
-    const [user, setUser] = React.useState<UserData | null>(stubData);
+    const [user, setUser] = React.useState<UserData | null>(null);
 
     /**
      * TODO: Siggy :)
@@ -19,17 +18,17 @@ function App() {
      *  __ write some tests
      */
 
-    // React.useEffect(() => {
-    //     const storedUserAddress = localStorage.getItem("userAddress");
+    React.useEffect(() => {
+        const storedUserAddress = localStorage.getItem("userAddress");
 
-    //     if (storedUserAddress) {
-    //         setUserAddress(storedUserAddress);
-    //         client.getUserAddress(storedUserAddress).then((resp) => {
-    //             setUser(resp);
-    //         });
-    //     }
-    //     return () => localStorage.clear();
-    // }, [setUserAddress, setUser]);
+        if (storedUserAddress) {
+            setUserAddress(storedUserAddress);
+            client.getUserAddress(storedUserAddress).then((resp) => {
+                setUser(resp);
+            });
+        }
+        return () => localStorage.clear();
+    }, [setUserAddress, setUser]);
 
     function handleUserSubmit(address: string): void {
         if (!address) setInvalidSigin(true);

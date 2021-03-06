@@ -38,7 +38,9 @@ const Graph: React.FC = () => {
                                 ? GraphColors.credit
                                 : GraphColors.debit;
 
-                            return <Cell fill={fillColor} />;
+                            return (
+                                <Cell key={entry.timestamp} fill={fillColor} />
+                            );
                         })}
                         <LabelList dataKey="label" position="top" />
                         <LabelList
@@ -46,11 +48,10 @@ const Graph: React.FC = () => {
                             position="center"
                             fill={labelColor}
                         />
-                        <LabelList dataKey="time" position="bottom" />
                     </Bar>
 
                     <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                    <XAxis dataKey="timestamp" angle={45}>
+                    <XAxis dataKey="time">
                         <Label
                             value="Transactions"
                             offset={10}

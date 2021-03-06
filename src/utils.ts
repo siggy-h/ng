@@ -11,6 +11,7 @@ export interface GraphData {
     credit: boolean;
     label: string;
     time: string;
+    timestamp: string;
 }
 
 export function transformTransationsToGraph(
@@ -40,6 +41,7 @@ export function tranactionToGData(
         credit: isCredit,
         label: label,
         time: time,
+        timestamp: timestamp,
     };
 
     return result;
