@@ -28,7 +28,7 @@ export function tranactionToGData(
 
     // if the toAddress is the same as userAddress this is a credit
     const isCredit: boolean = userAddress === toAddress;
-    const time = DateTime.fromISO(timestamp).toFormat("D t");
+    const time = DateTime.fromISO(timestamp).toFormat("LL/dd");
 
     /**
      * If this is a credit show who it's from, if any.

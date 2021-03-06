@@ -26,13 +26,11 @@ const Graph: React.FC = () => {
     );
 
     return (
-        <ResponsiveContainer width="99%" aspect={3}>
-            <>
+        <>
+            <ResponsiveContainer width="99%" height="90%">
                 <BarChart
-                    width={600}
-                    height={400}
                     data={graphData}
-                    margin={{ top: 20, right: 20, bottom: 25, left: 5 }}
+                    margin={{ top: 20, right: 20, bottom: 25, left: 20 }}
                 >
                     <Bar dataKey="amount" label>
                         {graphData.map((entry) => {
@@ -61,16 +59,16 @@ const Graph: React.FC = () => {
                     </XAxis>
                     <YAxis>
                         <Label
-                            value="Trasfer Amount"
+                            value="Amount"
                             offset={10}
                             angle={-90}
-                            position="insideBottomLeft"
+                            position="insideLeft"
                         />
                     </YAxis>
                 </BarChart>
-                <GraphKey />
-            </>
-        </ResponsiveContainer>
+            </ResponsiveContainer>
+            <GraphKey />
+        </>
     );
 };
 
