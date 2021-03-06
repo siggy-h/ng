@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ handleSignout }) => {
                 {userAddress}
             </Flex>
             <Flex flex="1" align="center" justify="flex-end">
-                <Avatar size="xs" name="Tom Selek" mr="2" />
+                <Avatar size="xs" name={userAddress} mr="2" />
                 <Text>Signed In</Text>
                 <Button
                     ml="5"

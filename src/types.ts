@@ -9,3 +9,11 @@ export interface UserData {
     balance: string;
     transactions: Array<Transaction>;
 }
+
+export interface GraphData {
+    amount: number;
+    credit: boolean;
+    label: string;
+    time: string;
+    timestamp: string;
+}

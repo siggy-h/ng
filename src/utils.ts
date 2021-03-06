@@ -1,17 +1,9 @@
 import { DateTime } from "luxon";
-import { Transaction, UserData } from "./types";
+import { GraphData, Transaction, UserData } from "./types";
 
 export function isInvalidUser(user: UserData): boolean {
     const { balance, transactions } = user;
     return parseInt(balance) === 0 && transactions.length === 0;
-}
-
-export interface GraphData {
-    amount: number;
-    credit: boolean;
-    label: string;
-    time: string;
-    timestamp: string;
 }
 
 export function transformTransationsToGraph(
@@ -21,7 +13,7 @@ export function transformTransationsToGraph(
     return transactions.map((t) => tranactionToGData(t, userAddress));
 }
 
-export function tranactionToGData(
+function tranactionToGData(
     usertransactions: Transaction,
     userAddress: string
 ): GraphData {

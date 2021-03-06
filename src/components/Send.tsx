@@ -10,21 +10,26 @@ interface Props {
 
 const Send: React.FC<Props> = ({ sendTransaction }) => {
     const [destination, setDestination] = React.useState<string | null>(null);
-    const [sendAmount, setSendAmount] = React.useState<string>("0");
+    const [sendAmount, setSendAmount] = React.useState<string | null>(null);
     const [sendMessage, setSendMessage] = React.useState(null);
 
     const { userAddress } = React.useContext(UserContext);
 
     function canContinue(): boolean {
-        return !!destination && amountIsValid() && parseInt(sendAmount) !== 0;
+        return (
+            !!destination &&
+            amountIsValid() &&
+            !!sendAmount &&
+            parseInt(sendAmount) !== 0
+        );
     }
 
     function amountIsValid(): boolean {
-        return !isNaN(parseInt(sendAmount));
+        return !isNaN(parseInt(sendAmount ?? "0"));
     }
 
     function clearAmount(): void {
-        setSendAmount("0");
+        setSendAmount(null);
     }
 
     function clearState(): void {
@@ -37,7 +42,7 @@ const Send: React.FC<Props> = ({ sendTransaction }) => {
         if (destination === null || !amountIsValid()) return;
 
         client
-            .sendJobcoin(userAddress, destination, parseInt(sendAmount))
+            .sendJobcoin(userAddress, destination, parseInt(sendAmount ?? "0"))
             .then((resp) => {
                 if (resp.error) {
                     setSendMessage(resp.error);
@@ -88,7 +93,7 @@ const Send: React.FC<Props> = ({ sendTransaction }) => {
                         isInvalid={!amountIsValid()}
                         borderColor="teal.400"
                         focusBorderColor="teal.300"
-                        placeholder="Enter number"
+                        placeholder="Enter amount"
                         value={sendAmount ?? ""}
                         onChange={(ev) => setSendAmount(ev.target.value)}
                     />

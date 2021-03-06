@@ -24,6 +24,7 @@ export async function sendJobcoin(
         });
         return response.data;
     } catch (error) {
+        debugger;
         return { error: "Insufficient Funds" };
     }
 }

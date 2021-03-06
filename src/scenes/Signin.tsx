@@ -27,7 +27,13 @@ const Signin: React.FC<Props> = ({ onSubmit, invalidSignin }) => {
     return (
         <Container centerContent mt="24" w="100%">
             <CheckCircleIcon w={24} h={24} color="teal" mb="10" />
-            <Box maxW="lg" borderWidth="1px" borderRadius="lg" border="1px">
+            <Box
+                maxW="lg"
+                borderWidth="1px"
+                borderRadius="lg"
+                border="1px"
+                textAlign="center"
+            >
                 <Box p="6">
                     <Heading as="h3" size="lg">
                         Welcome!

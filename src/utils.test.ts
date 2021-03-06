@@ -1,5 +1,6 @@
-import { isInvalidUser } from "./utils";
-import { UserData } from "./types";
+import { isInvalidUser, transformTransationsToGraph } from "./utils";
+import { GraphData, UserData } from "./types";
+import { graphData, stubData } from "./StubData";
 
 test("isInvalidUser returns true with empty user", () => {
     const emptyUser: UserData = {
@@ -28,4 +29,14 @@ test("isInvalidUser returns false with non-empty user", () => {
     const actual = isInvalidUser(emptyUser);
 
     expect(actual).toBe(false);
+});
+
+test("transformTransationsToGraph transforms tranaction list to graph data", () => {
+    const transactions = stubData.transactions;
+    const testUserAddress = "Alice";
+    const expected: GraphData[] = graphData;
+
+    expect(
+        transformTransationsToGraph(transactions, testUserAddress)
+    ).toStrictEqual(expected);
 });

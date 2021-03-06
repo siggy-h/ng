@@ -1,4 +1,4 @@
-import { UserData } from "./types";
+import { GraphData, UserData } from "./types";
 
 export const stubData: UserData = {
     balance: "4.5",
@@ -33,3 +33,41 @@ export const stubData: UserData = {
         },
     ],
 };
+
+export const graphData: GraphData[] = [
+    {
+        amount: 50,
+        credit: true,
+        label: "",
+        time: "02/18",
+        timestamp: "2021-02-18T17:53:15.470Z",
+    },
+    {
+        amount: 12,
+        credit: false,
+        label: "Bob",
+        time: "02/18",
+        timestamp: "2021-02-18T17:53:15.473Z",
+    },
+    {
+        amount: 33,
+        credit: false,
+        label: "ddd",
+        time: "02/27",
+        timestamp: "2021-02-28T02:29:27.057Z",
+    },
+    {
+        amount: 50,
+        credit: true,
+        label: "",
+        time: "02/27",
+        timestamp: "2021-02-28T02:33:47.883Z",
+    },
+    {
+        amount: 50,
+        credit: false,
+        label: "ddd",
+        time: "02/27",
+        timestamp: "2021-02-28T02:39:20.007Z",
+    },
+];

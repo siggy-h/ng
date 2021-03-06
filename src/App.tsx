@@ -11,13 +11,6 @@ function App() {
     const [invalidSignin, setInvalidSigin] = React.useState(false);
     const [user, setUser] = React.useState<UserData | null>(null);
 
-    /**
-     * TODO: Siggy :)
-     *  __ make the graph responsive
-     *  __ ensure the graph works with a lot of transactions.
-     *  __ write some tests
-     */
-
     React.useEffect(() => {
         const storedUserAddress = localStorage.getItem("userAddress");
 
